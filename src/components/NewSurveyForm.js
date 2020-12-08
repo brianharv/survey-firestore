@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+function NewSurveyForm(props) {
 
-function NewSurveyForm() {
-  const [inputList, setInputList] = useState([{question: '', answer: ''}])
+  const [inputList, setInputList] = useState([{ question: '', answer: '' }])
 
   const handleInputChange = (event, index) => {
     const { name, value } = event.target;
@@ -9,60 +10,69 @@ function NewSurveyForm() {
     list[index][name] = value;
     setInputList(list);
   };
-   
+
   const handleRemoveClick = index => {
     const list = [...inputList];
     list.splice(index, 1);
     setInputList(list);
   };
-   
+
   const handleAddClick = () => {
     setInputList([...inputList, { question: "", answer: "" }]);
   };
 
+  function addSurveyToList(event) {
+    event.preventDefault();
+    props.onSubmitClick();
+  }
 
-  return(
+  return (
     <React.Fragment>
       <form>
         <label name='prompt'>Survey Title</label>
-        <input 
+        <input
           type='text'
           name='prompt'
-          value='' /> <br></br>
-        <label name='question'>Question</label>
-        <input 
-          type='text'  
-          name='question'
-          value=''/> <br></br>
+          placeholder=' Survey category'
+          required />
 
         {inputList.map((field, index) => {
           return (
             <div className='newField'>
-            <label name='question'>Question</label>
-            <input 
-              type='text'  
-              name='question'
-              placeholder='write a question'
-              value={field.question} 
-              onChange={event => handleInputChange(event, index)} /> <br></br>
-            <label name='answer'>Answer</label>
-            <input 
-              type='text'
-              name='answer'
-              placeholder='answer field'  
-              value={field.answer} 
-              onChange={event => handleInputChange(event, index)} />
+              <label name='question'>Question</label>
+              <input
+                type='text'
+                name='question'
+                placeholder=' Write a question'
+                value={field.question}
+                required
+                onChange={event => handleInputChange(event, index)} />
+              <label name='answer'>Answer</label>
+              <input
+                type='text'
+                name='answer'
+                placeholder=' Answer field'
+                value={field.answer}
+                required
+                onChange={event => handleInputChange(event, index)} />
 
-          {inputList.length > 1 && 
-            <button type='button' onClick={() => handleRemoveClick(index)}>Remove Question</button>}
-          {inputList.length - 1 <= 10 && 
-            <button type='button' onClick={() => handleAddClick(index)}>Add Question </button>} 
+              <div className="buttonBox">
+                {inputList.length > 1 &&
+                  <button type='button' onClick={() => handleRemoveClick(index)}>Remove Question</button>}
+                {inputList.length - 1 <= 10 &&
+                  <button type='button' onClick={() => handleAddClick(index)}>Add Question </button>}
+              </div>
             </div>
-          ); 
-        })}  
+          );
+        })}
+        <button type='submit'>Submit</button>
       </form>
     </React.Fragment>
   )
+}
+
+NewSurveyForm.propTypes = {
+  onSubmitClick: PropTypes.func
 }
 
 export default NewSurveyForm;

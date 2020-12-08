@@ -22,7 +22,7 @@ class SurveyControl extends React.Component {
     let currentlyVisibleState = null;
     let buttonText = null;
     if (this.state.formVisibleOnPage) {
-      currentlyVisibleState = <NewSurveyForm />
+      currentlyVisibleState = <NewSurveyForm onSubmitClick={this.handleClick}/>
       buttonText = "Return to Survey List";
     } else {
       currentlyVisibleState = <SurveyList />
@@ -30,11 +30,11 @@ class SurveyControl extends React.Component {
     }
     return (
       <React.Fragment>
-       {currentlyVisibleState}
-       <button onClick={this.handleClick}>{buttonText}</button>
+        {currentlyVisibleState}
+        <button onClick={this.handleClick}>{buttonText}</button>
       </React.Fragment>
     );
   }
 }
-    
+
 export default SurveyControl;
