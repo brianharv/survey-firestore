@@ -15,7 +15,7 @@ class SurveyControl extends React.Component {
   handleClick = () => {
     this.setState(prevState => ({
       formVisibleOnPage: !prevState.formVisibleOnPage}));
-    }
+  }
 
 
   render () {
